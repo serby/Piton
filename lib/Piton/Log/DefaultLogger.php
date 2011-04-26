@@ -7,7 +7,7 @@ namespace Piton\Log;
  * @copyright Clock Limited 2011
  * @license http://opensource.org/licenses/bsd-license.php New BSD License
  */
-class StdOutLogger {
+class DefaultLogger {
 
 	const LEVEL_DEBUG = 1;
 	const LEVEL_INFO = 2;
