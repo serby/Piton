@@ -13,12 +13,14 @@ class AutoLoader {
 	/**
 	 * Autoload Piton classes
 	 */
-	public static function register() {
-		spl_autoload_register(function($className) {
+	public static function register($basePath) {
+		spl_autoload_register(function($className) use ($basePath) {
 			$classPath = str_replace("\\", "/", $className . ".php");
 			// It is very important to not cause an error in an autoload to give other
 			// autoloaders a chance to find the class.
-			@require $classPath;
+			if (is_readable($basePath . $classPath)) {
+				require $basePath . $classPath;
+			}
 		});
 	}
 }
