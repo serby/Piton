@@ -1,5 +1,5 @@
 <?php
-namespace Piton;
+namespace Piton\Application;
 
 /**
  * Autoloader for Piton classes
