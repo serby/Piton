@@ -14,6 +14,13 @@ class MaidenProject extends MaidenDefault {
 	}
 
 	/**
+	 * Create mess report
+	 */
+	public function createMessReport() {
+		$this->exec("phpmd lib xml codesize,unusedcode,naming,design --reportfile build/log/pmd.xml");
+	}
+
+	/**
 	 * Runs all the phpunit tests
 	 */
 	public function test() {
