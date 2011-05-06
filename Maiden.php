@@ -17,6 +17,7 @@ class MaidenProject extends MaidenDefault {
 	 * Create mess report
 	 */
 	public function createMessReport() {
+		$this->clean();
 		$this->exec("phpmd lib xml codesize,unusedcode,naming,design --reportfile build/log/pmd.xml");
 	}
 
@@ -26,11 +27,20 @@ class MaidenProject extends MaidenDefault {
 	public function test() {
 		$this->clean();
 		chdir("test");
+		$this->exec("phpunit --bootstrap PitonBootstrap.php Piton");
+	}
+
+	/**
+	 * Creates phpunit test reports
+	 */
+	public function createTestReports() {
+		$this->clean();
+		chdir("test");
 		$this->exec("phpunit --log-junit ../build/log/phpunit.xml --coverage-clover ../build/coverage/coverage.xml --bootstrap PitonBootstrap.php Piton");
 	}
 
 	/**
-	 * Runs all the phpunit tests
+	 * Cleans for build directory and recreates it.
 	 */
 	public function clean() {
 		$this->exec("rm -rf build");
@@ -38,4 +48,14 @@ class MaidenProject extends MaidenDefault {
 		mkdir("build/log", 0775, true);
 	}
 
+	/**
+	 * Validates all the PHP code with php -l
+	 */
+	public function validate() {
+		$path = ".";
+		$iterator = new \RegexIterator(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)), "/\.php$/i");
+		foreach ($iterator as $filePath) {
+			$this->exec("php -l {$filePath}");
+		}
+	}
 }
