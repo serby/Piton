@@ -23,7 +23,7 @@ class FileLineContentReplacer implements IFileContentReplacer {
 	public function replace(array $replacements, $filename) {
 
 		if (!file_exists($filename)) {
-			throw Exception("File not found '{$filname}'");
+			throw Exception("File not found '{$filename}'");
 		}
 
 		$tempName = tempnam(sys_get_temp_dir(), "Maid");
